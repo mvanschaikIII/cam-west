@@ -3,215 +3,379 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CAM WEST — Site-to-Finish Construction</title>
+  <title>CAM WEST</title>
   <style>
     :root {
-      --sand: #F3ECDD;
-      --rawhide: #C9A876;
-      --clay: #A85C32;
-      --rust: #8B4226;
-      --ink: #2B2018;
-      --iron: #3E3226;
-      --muted: #6B5D4A;
-      --line: #D8CBAE;
+      --bg: #000000;
+      --ink: #F5F5F5;
+      --muted: #9A9A9A;
+      --line: #222222;
+      --soft: #EDEDED;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: "Georgia", "Iowan Old Style", serif;
-      background: var(--sand);
+      background: var(--bg);
       color: var(--ink);
-      line-height: 1.55;
+      font-family: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
-    a { color: var(--rust); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
-
-    /* Top rail: barbed-wire-ish rule drawn in CSS */
-    .top-rule {
-      height: 6px;
-      background: repeating-linear-gradient(
-        90deg, var(--rust) 0px, var(--rust) 10px, transparent 10px, transparent 14px
-      );
-    }
+    a { color: var(--ink); text-decoration: none; }
+    a:hover { opacity: 0.72; }
+    img { max-width: 100%; display: block; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
 
     header {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 26px 0; border-bottom: 3px double var(--iron);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
     }
-    .logo {
-      font-family: "Copperplate", "Georgia", serif;
-      font-weight: 700; letter-spacing: 0.14em; font-size: 20px;
-      text-transform: uppercase; color: var(--iron);
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
     }
-    .logo span { color: var(--clay); }
-    nav { display: flex; gap: 26px; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); flex-wrap: wrap; }
-    nav a { color: var(--muted); border-bottom: 1px solid transparent; }
-    nav a:hover { color: var(--rust); border-bottom-color: var(--rust); text-decoration: none; }
+    .brand img {
+      width: 36px;
+      height: 36px;
+      object-fit: cover;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .logo-type {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+    }
+    nav {
+      display: flex;
+      gap: 26px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    nav a { color: var(--muted); }
+    nav a:hover { color: var(--ink); opacity: 1; }
 
-    /* Hero */
-    .hero {
-      padding: 64px 0 48px;
+    /* Cinematic full-bleed hero */
+    .hero-bleed {
+      margin: 0 calc(50% - 50vw);
+      width: 100vw;
+      position: relative;
+      background: #050505;
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-bleed img {
+      width: 100%;
+      height: min(78vh, 760px);
+      object-fit: cover;
+      object-position: center;
+      filter: grayscale(0.2) contrast(1.08) brightness(0.92);
+    }
+    .hero-bleed .veil {
+      position: absolute;
+      inset: 0;
       background:
-        radial-gradient(ellipse at 50% 0%, rgba(200,160,100,0.18), transparent 60%);
+        linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.78) 100%);
+      pointer-events: none;
     }
-    .badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--rust); border: 1px solid var(--rust); border-radius: 999px;
-      padding: 6px 14px; margin-bottom: 24px;
-    }
-    .badge::before { content: "★"; font-size: 12px; }
-
-    .hero-frame {
-      height: 320px;
-      border: 6px solid var(--iron);
-      margin-bottom: 44px; position: relative; overflow: hidden;
-      background: var(--iron);
-    }
-    .hero-frame img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-    }
-    .hero-frame .cap {
-      position: absolute; left: 0; bottom: 0; z-index: 2;
-      background: var(--iron); color: var(--sand);
-      font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 8px 14px;
+    .hero-bleed .cap {
+      position: absolute;
+      left: max(28px, calc((100vw - 1180px) / 2 + 28px));
+      bottom: 28px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
 
+    .hero-copy {
+      padding: 64px 0 72px;
+      border-bottom: 1px solid var(--line);
+    }
     h1 {
-      font-family: "Georgia", serif;
-      font-size: clamp(32px, 5.4vw, 50px); font-weight: 700;
-      letter-spacing: -0.01em; line-height: 1.1; margin: 0 0 18px; max-width: 15ch;
-      color: var(--iron);
+      margin: 0 0 28px;
+      font-size: clamp(34px, 6.8vw, 68px);
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      line-height: 1.02;
+      max-width: 14ch;
+      color: var(--soft);
     }
-    .lede { font-size: 19px; color: var(--muted); max-width: 38ch; margin: 0 0 32px; }
-
+    .lede {
+      margin: 0 0 36px;
+      font-size: clamp(16px, 2.1vw, 19px);
+      color: var(--muted);
+      max-width: 44ch;
+      line-height: 1.55;
+    }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
     .cta {
-      display: inline-block; padding: 13px 26px;
-      background: var(--rust); color: var(--sand);
-      font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
-      border: 1px solid var(--rust);
+      display: inline-block;
+      padding: 14px 22px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--bg);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
     }
-    .cta:hover { background: var(--clay); border-color: var(--clay); text-decoration: none; }
-    .cta.secondary {
-      background: transparent; color: var(--iron); border-color: var(--iron); margin-left: 12px;
+    .cta:hover { opacity: 0.85; }
+    .cta.ghost {
+      background: transparent;
+      color: var(--ink);
     }
-    .cta.secondary:hover { background: var(--iron); color: var(--sand); }
 
-    section { padding: 52px 0; border-top: 1px solid var(--line); }
+    section {
+      padding: 72px 0;
+      border-bottom: 1px solid var(--line);
+    }
     .kicker {
-      font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--rust); font-weight: 700; margin: 0 0 10px;
+      margin: 0 0 12px;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
     h2 {
-      font-size: 26px; font-weight: 700; margin: 0 0 28px; color: var(--iron);
+      margin: 0 0 40px;
+      font-size: clamp(24px, 3.4vw, 34px);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      max-width: 18ch;
+      color: var(--soft);
     }
 
-    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 4px; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
     .step {
-      padding: 24px 20px; background: #FFFDF7; border: 1px solid var(--line);
-      position: relative;
+      padding: 28px 20px 28px 0;
+      border-bottom: 1px solid var(--line);
     }
+    .step + .step { border-left: 1px solid var(--line); padding-left: 24px; }
     .step .num {
-      font-family: "Georgia", serif; font-size: 34px; font-weight: 700;
-      color: var(--rawhide); line-height: 1; margin-bottom: 10px;
+      display: block;
+      margin-bottom: 16px;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      color: var(--muted);
     }
-    .step strong { display: block; margin-bottom: 6px; font-weight: 700; color: var(--iron); }
+    .step strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--soft);
+    }
     .step span { font-size: 14px; color: var(--muted); }
 
-    .build-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-    .build-card {
-      border: 1px solid var(--line); background: #FFFDF7; padding: 22px;
+    .offers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--line);
     }
-    .build-card strong { display: block; font-size: 16px; color: var(--iron); margin-bottom: 8px; }
-    .build-card span { font-size: 14px; color: var(--muted); }
+    .offer {
+      padding: 28px 24px 28px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .offer + .offer { border-left: 1px solid var(--line); padding-left: 24px; }
+    .offer strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--soft);
+    }
+    .offer span { font-size: 14px; color: var(--muted); }
 
-    .promise-bar {
-      display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
-      border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-      padding: 28px 0; margin: 8px 0 0;
+    /* Image strip — SpaceX sparse gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
     }
-    .promise-bar .mark { font-size: 28px; color: var(--rust); }
-    .promise-bar p { margin: 0; font-size: 19px; color: var(--iron); max-width: 40ch; }
+        .gallery figure {
+      margin: 0;
+      background: #0A0A0A;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      position: relative;
+    }
+    .gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      min-height: 220px;
+      filter: grayscale(0.25) contrast(1.05);
+    }
+        .gallery figcaption {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      padding: 10px 12px;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(0,0,0,0.7);
+    }
 
-    .contact-box {
-      border: 2px solid var(--iron); padding: 32px; background: #FFFDF7;
+    .contact-lede {
+      margin: 0 0 28px;
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 36ch;
     }
-    .contact-box p.lede { margin-bottom: 20px; }
 
     footer {
-      padding: 40px 0 56px; border-top: 3px double var(--iron);
-      font-size: 12px; letter-spacing: 0.04em; color: var(--muted);
-      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 36px 0 64px;
+      font-size: 11px;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    @media (max-width: 860px) {
+      .steps, .offers { grid-template-columns: 1fr; }
+      .step + .step,
+      .offer + .offer { border-left: none; padding-left: 0; }
+      .gallery { grid-template-columns: 1fr; }
+                  .hero-bleed img { height: min(56vh, 420px); }
+      .hero-copy { padding: 44px 0 56px; }
     }
   </style>
 </head>
 <body>
-  <div class="top-rule"></div>
   <div class="wrap">
     <header>
-      <div class="logo">CAM <span>WEST</span></div>
+      <div class="brand">
+        <img src="images/logo.png" alt="" width="36" height="36" />
+        <div class="logo-type">CAM WEST</div>
+      </div>
       <nav>
-        <a href="#how">The Process</a>
-        <a href="#build">What We Build</a>
-        <a href="#start">Start Here</a>
+        <a href="#process">Process</a>
+        <a href="#work">Work</a>
+        <a href="#build">Build</a>
+        <a href="#start">Contact</a>
       </nav>
     </header>
+  </div>
 
+  <div class="hero-bleed">
+    <img
+      src="images/rendering-3022.png"
+      alt="CAM WEST architectural rendering — Streamline facade concept"
+    />
+    <div class="veil" aria-hidden="true"></div>
+    <div class="cap">Conceptual design</div>
+  </div>
+
+  <div class="wrap">
     <main>
-      <div class="hero">
-        <div class="badge">Northern California · Site-to-Finish</div>
-        <div class="hero-frame">
-          <img src="hero-casita-concept.png" alt="CAM WEST conceptual backyard home — Provence finishes and landscaping" />
-          <div class="cap">Conceptual design</div>
-        </div>
+      <div class="hero-copy">
         <h1>CAM WEST Construction. Building Quality Homes Since 1962</h1>
-        <p class="lede">We visit your site, design the concept, handle permits and foundation, and bring in trusted local tradespeople to build it. One point of contact from first walkthrough to final finish — you don't manage subcontractors, we do.</p>
-        <a class="cta" href="#start">Talk About Your Site</a>
-        <a class="cta secondary" href="#how">See The Process</a>
+        <p class="lede">We visit your site, design the concept, handle permits and foundation, and bring in trusted local tradespeople. One point of contact from first walkthrough to final finish — you don’t manage subcontractors, we do.</p>
+        <div class="cta-row">
+          <a class="cta" href="mailto:hello@cam-west.com?subject=CAM%20WEST%20site%20inquiry">Email CAM WEST</a>
+          <a class="cta ghost" href="#process">See the process</a>
+        </div>
       </div>
 
-      <section id="how">
-        <p class="kicker">How It Works</p>
-        <h2>Four steps, one crew</h2>
+      <section id="process">
+        <p class="kicker">How it works</p>
+        <h2>Four steps. One point of contact.</h2>
         <div class="steps">
-          <div class="step"><div class="num">01</div><strong>Site &amp; Design</strong><span>Plans and a clear site path for your lot.</span></div>
-          <div class="step"><div class="num">02</div><strong>Foundation</strong><span>Engineered base, built to hold the structure.</span></div>
-          <div class="step"><div class="num">03</div><strong>Build</strong><span>Structure raised and tied into the site.</span></div>
-          <div class="step"><div class="num">04</div><strong>Finish</strong><span>Exteriors, utilities, outdoor work — done.</span></div>
+          <div class="step">
+            <span class="num">01</span>
+            <strong>Site &amp; Design</strong>
+            <span>Walk the lot. Lock the concept.</span>
+          </div>
+          <div class="step">
+            <span class="num">02</span>
+            <strong>Foundation</strong>
+            <span>Permits cleared. Base engineered.</span>
+          </div>
+          <div class="step">
+            <span class="num">03</span>
+            <strong>Build</strong>
+            <span>Trusted local trades, coordinated.</span>
+          </div>
+          <div class="step">
+            <span class="num">04</span>
+            <strong>Finish</strong>
+            <span>Exteriors, utilities, outdoor work — done.</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="work">
+        <p class="kicker">Selected work</p>
+        <h2>Design. Fabrication. Field.</h2>
+        <div class="gallery process-stills">
+          <figure>
+            <img src="images/section-render.png" alt="Architectural section concept" />
+            <figcaption>Concept</figcaption>
+          </figure>
+          <figure>
+            <img src="images/steel-shop.png" alt="Steel fabrication concept" />
+            <figcaption>Fabrication</figcaption>
+          </figure>
+          <figure>
+            <img src="images/crew-working.png" alt="Crew on site" />
+            <figcaption>On site</figcaption>
+          </figure>
         </div>
       </section>
 
       <section id="build">
-        <p class="kicker">What We Build</p>
-        <h2>Architectural design and construction, not a generic contractor menu</h2>
-        <div class="build-grid">
-          <div class="build-card"><strong>Backyard Homes</strong><span>Full site-to-finish for a single backyard home — the most common build.</span></div>
-          <div class="build-card"><strong>ADU Packages</strong><span>Backyard units set up as permitted, livable ADUs.</span></div>
-          <div class="build-card"><strong>Multi-Unit Sites</strong><span>Two or more units on a lot, coordinated as one project.</span></div>
-        </div>
-        <div class="promise-bar">
-          <span class="mark">◆</span>
-          <p>Decades of structural drafting and steel fabrication behind every foundation we pour.</p>
+        <p class="kicker">What we build</p>
+        <h2>Backyard homes and multi-unit sites.</h2>
+        <div class="offers">
+          <div class="offer">
+            <strong>Backyard Homes</strong>
+            <span>Full site-to-finish for a single backyard home.</span>
+          </div>
+          <div class="offer">
+            <strong>ADU Packages</strong>
+            <span>Permitted, livable accessory dwelling units.</span>
+          </div>
+          <div class="offer">
+            <strong>Multi-Unit Sites</strong>
+            <span>Two or more units, run as one project.</span>
+          </div>
         </div>
       </section>
 
       <section id="start">
-        <p class="kicker">Start Here</p>
+        <p class="kicker">Start here</p>
         <h2>Tell us about your lot</h2>
-        <div class="contact-box">
-          <p class="lede">City, timeline, and what you're hoping to build. A conversation first — not a hard sell.</p>
-          <a class="cta" href="mailto:hello@cam-west.com?subject=CAM%20WEST%20site%20inquiry">Email CAM WEST</a>
-        </div>
+        <p class="contact-lede">City, timeline, and what you’re hoping to build. A conversation first.</p>
+        <a class="cta" href="mailto:hello@cam-west.com?subject=CAM%20WEST%20site%20inquiry">hello@cam-west.com</a>
       </section>
     </main>
 
     <footer>
-      <div>CAM WEST · Northern California</div>
-      <div>Preview — Not Live DNS Yet</div>
+      <div>CAM WEST</div>
+      <div>Preview</div>
     </footer>
   </div>
 </body>
